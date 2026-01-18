@@ -84,7 +84,7 @@ linkshort-flask/
 
 ## 🖥 Screenshots
 
-> *(Add screenshots here)*
+> *(/screenshots/home.png)*
 
 Example:
 
