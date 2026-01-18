@@ -94,23 +94,14 @@ def home():
         short_code = generate_unique_short_code()
         short_url = short_code
 
-        # Logged-in user → save to DB
-        if current_user.is_authenticated:
-            new_url = URL(
-                original_url=original_url,
-                short_code=short_code,
-                user_id=current_user.id
-            )
-            db.session.add(new_url)
-            db.session.commit()
+        new_url = URL(
+            original_url=original_url,
+            short_code=short_code,
+            user_id=current_user.id if current_user.is_authenticated else None
+        )
+        db.session.add(new_url)
+        db.session.commit()
 
-        # Guest user → save to session
-        else:
-            session['guest_urls'].insert(0, {
-                'original_url': original_url,
-                'short_code': short_code
-            })
-            session.modified = True
 
     # Fetch recent URLs
     if current_user.is_authenticated:
