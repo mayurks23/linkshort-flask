@@ -86,6 +86,7 @@ linkshort-flask/
 
 >
 ![Home Page](/screenshots/home.png)
+![ShortedURL](/screenshots/home_shorturl.png)
 ![Login](/screenshots/login.png)
 
 
