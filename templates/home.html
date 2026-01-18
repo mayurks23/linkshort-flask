@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LinkShort • URL Shortener</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #0b1220;
+            --bg-card: #121a2f;
+            --bg-accent: #1b2a4a;
+            --primary: #5eead4;
+            --secondary: #818cf8;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-soft: #253052;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: radial-gradient(circle at top, #0f172a, #0b1220);
+            color: var(--text-main);
+        }
+
+        a { color: var(--primary); text-decoration: none; }
+
+        /* ---------- NAVBAR ---------- */
+        nav {
+            background: var(--bg-accent);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .nav-actions a {
+            margin-left: 16px;
+            font-weight: 500;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: #000;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 50px;
+        }
+
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: -0.6px;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #ffffff, #5eead4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 18px;
+            max-width: 520px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* ---------- CARD ---------- */
+        .card {
+            background: linear-gradient(180deg, #0f172a, #0b1220);
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 26px;
+            border-radius: 16px;
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-main);
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        button {
+            background: var(--primary);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .result {
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-main);
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        /* ---------- RECENT LINKS ---------- */
+        .recent {
+            max-width: 800px;
+            margin: 70px auto;
+            padding: 0 20px;
+        }
+
+        .recent h2 {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .recent-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .recent-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .recent-item {
+            background: var(--bg-main);
+            padding: 12px;
+            border-radius: 12px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .recent-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .original-url {
+            font-size: 14px;
+            color: var(--text-muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .short-row {
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .short-row a {
+            color: var(--primary);
+            overflow-wrap: anywhere;
+        }
+
+        .short-row button {
+            flex-shrink: 0;
+            border-radius: 8px;
+            padding: 6px 10px;
+        }
+
+        .muted {
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            background: var(--bg-accent);
+            text-align: center;
+            padding: 22px;
+            margin-top: 60px;
+            font-size: 14px;
+        }
+
+        footer a {
+            margin: 0 10px;
+        }
+
+        /* ---------- MODAL ---------- */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            padding: 26px;
+            border-radius: 14px;
+            width: 350px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 14px;
+            top: 10px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">LinkShort</div>
+    <div class="nav-actions">
+        {% if current_user.is_authenticated %}
+            <span>Hi, {{ current_user.username }}</span>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="#" onclick="openModal('loginModal')">Login</a>
+            <a href="#" class="btn" onclick="openModal('signupModal')">Sign Up</a>
+        {% endif %}
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>Shorten URLs Instantly</h1>
+    <p>Simple. Fast. Shareable links.</p>
+
+    <div class="card">
+        <form method="POST">
+            <input type="text" name="url" placeholder="Paste long URL here..." required>
+            <button type="submit">Shorten Link</button>
+        </form>
+
+        {% if short_url %}
+        <div class="result">
+            <a href="/{{ short_url }}" target="_blank">
+                {{ request.host_url }}{{ short_url }}
+            </a>
+            <button onclick="copyToClipboard('{{ request.host_url }}{{ short_url }}')">Copy</button>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- RECENT LINKS -->
+<section class="recent">
+    <h2>Your Recent Links</h2>
+    <div class="recent-card">
+        {% if recent_urls %}
+        <div class="recent-list">
+            {% for url in recent_urls %}
+            <div class="recent-item">
+                <div class="original-url">
+                    {{ url.original_url if url.original_url else url['original_url'] }}
+                </div>
+                <div class="short-row">
+                    <a href="/{{ url.short_code if url.short_code else url['short_code'] }}">
+                        {{ request.host_url }}{{ url.short_code if url.short_code else url['short_code'] }}
+                    </a>
+                    <button onclick="copyToClipboard('{{ request.host_url }}{{ url.short_code if url.short_code else url['short_code'] }}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+                            <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="muted">No links yet. Shorten your first one 🚀</p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    Built by Mayur •
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <a href="https://github.com" target="_blank">GitHub</a>
+    <a href="mailto:yourmail@gmail.com">Gmail</a>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal">
+    <div class="modal-box">
+        <span class="close" onclick="closeModal('loginModal')">✕</span>
+        <h2>Login</h2>
+        <form method="POST" action="{{ url_for('login') }}">
+            <input name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div id="signupModal" class="modal">
+    <div class="modal-box">
+        <span class="close" onclick="closeModal('signupModal')">✕</span>
+        <h2>Sign Up</h2>
+        <form method="POST" action="{{ url_for('signup') }}">
+            <input name="username" placeholder="Username (5–9 chars)" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function openModal(id) {
+    document.getElementById(id).style.display = 'flex';
+}
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text);
+}
+</script>
+
+</body>
+</html>

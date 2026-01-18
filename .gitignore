@@ -1,0 +1,23 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Flask / instance
+instance/
+*.db
+
+# Virtual environment
+url_shrtnr/
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Project documents
+Flask Project Doc.pdf
