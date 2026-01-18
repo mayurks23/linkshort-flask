@@ -85,14 +85,9 @@ linkshort-flask/
 ## 🖥 Screenshots
 
 > *(/screenshots/home.png)*
+![Home Page](screenshots/home.png)
+![Login](screenshots/login.png)
 
-Example:
-
-```
-/screenshots/home.png
-/screenshots/login.png
-/screenshots/signup.png
-```
 
 ---
 
